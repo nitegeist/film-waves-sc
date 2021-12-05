@@ -5,19 +5,23 @@ describe('MovieContract', function () {
 	let movieFactory, movieContract;
 	let owner, randomPerson;
 	beforeEach(async function () {
-		[owner, randomPerson] = await hre.ethers.getSigners();
 		movieFactory = await hre.ethers.getContractFactory('MovieContract');
+		[owner, randomPerson] = await hre.ethers.getSigners();
 		movieContract = await movieFactory.deploy();
 		await movieContract.deployed();
 	});
 	it('Should submit a movie', async function () {
-		await movieContract.submitMyMovie('Ip Man', 'Action');
-		expect(await movieContract.getTotalMovies()).to.equal(1);
+		const title = 'Ip Man';
+		await movieContract.connect(owner).submitMovie(title);
+		const movies = await movieContract.getMovies();
+		expect(movies.length).to.equal(1);
+		expect(await movieContract.getUserMovieCount(owner.address)).to.equal(1);
 	});
 	it('Should submit a movie with a random address', async function () {
-		await movieContract
-			.connect(randomPerson)
-			.submitMyMovie('Old Henry', 'Western');
-		expect(await movieContract.getTotalMovies()).to.equal(1);
+		const title = 'Old Henry';
+		await movieContract.connect(randomPerson).submitMovie(title);
+		const movies = await movieContract.getMovies();
+		expect(movies.length).to.equal(1);
+		expect(await movieContract.getUserMovieCount(randomPerson.address)).to.equal(1);
 	});
 });
