@@ -5,11 +5,11 @@ const main = async () => {
 	console.log('Deploying contracts with account: ', deployer.address);
 	console.log('Account balance: ', accountBalance.toString());
 
-	const Token = await hre.ethers.getContractFactory('Movie');
-	const portal = await Token.deploy();
-	await portal.deployed();
+	const movieFactory = await hre.ethers.getContractFactory('MovieContract');
+	const movieContract = await movieFactory.deploy();
+	await movieContract.deployed();
 
-	console.log('Movie address: ', portal.address);
+	console.log('Movie address: ', movieContract.address);
 };
 
 const runMain = async () => {

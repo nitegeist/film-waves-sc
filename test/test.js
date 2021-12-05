@@ -15,6 +15,11 @@ describe('MovieContract', function () {
 		await movieContract.connect(owner).submitMovie(title);
 		const movies = await movieContract.getMovies();
 		expect(movies.length).to.equal(1);
+		console.log(
+			'0x8de806462823aD25056eE8104101F9367E208C14'.substr(0, 4) +
+				'...' +
+				'0x8de806462823aD25056eE8104101F9367E208C14'.substr(38)
+		);
 		expect(await movieContract.getUserMovieCount(owner.address)).to.equal(1);
 	});
 	it('Should submit a movie with a random address', async function () {
