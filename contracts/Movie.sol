@@ -8,6 +8,9 @@ contract MovieContract {
     struct Movie {
         address account;
         string title;
+        string genre;
+        string image;
+        uint256 year;
         uint256 timestamp;
     }
     mapping(address => uint256) userMovieCount;
