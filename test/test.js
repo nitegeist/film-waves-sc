@@ -12,7 +12,10 @@ describe('MovieContract', function () {
 	});
 	it('Should submit a movie', async function () {
 		const title = 'Ip Man';
-		await movieContract.connect(owner).submitMovie(title);
+		const genre = ' Action';
+		const year = '2008';
+		const image = 'image';
+		await movieContract.connect(owner).submitMovie(title, genre, image, year);
 		const movies = await movieContract.getAllMovies();
 		expect(movies.length).to.equal(1);
 		expect(await movieContract.getUserMovieCount(owner.address)).to.equal(1);
@@ -20,7 +23,10 @@ describe('MovieContract', function () {
 	});
 	it('Should submit a movie with a random address', async function () {
 		const title = 'Old Henry';
-		await movieContract.connect(randomPerson).submitMovie(title);
+		const genre = ' Western';
+		const year = '2021';
+		const image = 'image';
+		await movieContract.connect(randomPerson).submitMovie(title, genre, image, year);
 		const movies = await movieContract.getAllMovies();
 		expect(movies.length).to.equal(1);
 		expect(await movieContract.getUserMovieCount(randomPerson.address)).to.equal(1);
