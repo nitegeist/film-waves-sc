@@ -10,6 +10,15 @@ const main = async () => {
 	await movieContract.deployed();
 
 	console.log('Movie address: ', movieContract.address);
+
+	console.log('Verifying on etherscan...');
+	if (network.name != 'hardhat') {
+		await run('verify', {
+			address: movieContract.address,
+			constructorArgParams: [],
+		});
+		console.log('Verified :D');
+	}
 };
 
 const runMain = async () => {
